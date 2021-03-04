@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:news_app/view/entity/TopTobItem.dart';
+import 'package:news_app/com/newsflutter/view/entity/TopTobItem.dart';
 
 import 'MainSubPage.dart';
 

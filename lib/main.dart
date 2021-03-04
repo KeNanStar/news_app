@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/view/PersonPage.dart';
-import 'package:news_app/view/VideoPage.dart';
-
-import 'view/MainPage.dart';
+import 'package:news_app/com/newsflutter/view/VideoPage.dart';
+import 'com/newsflutter/view/PersonPage.dart';
+import 'com/newsflutter/view/mainpage/MainPage.dart';
 
 void main() {
   runApp(NewsApp());
