@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/com/newsflutter/view/entity/BaseNewsItem.dart';
+import 'package:news_app/com/newsflutter/view/mainpage/SubPageAssist.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+import 'module/SubPageModule.dart';
 
 class MainSubPage extends StatefulWidget {
   @override
@@ -8,9 +12,12 @@ class MainSubPage extends StatefulWidget {
 }
 
 class MainSubPageState extends State<MainSubPage> {
-  List<String> items = ["1", "2", "3", "4", "5", "6", "7", "8"];
+  //List<String> items = ["1", "2", "3", "4", "5", "6", "7", "8"];
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
+
+  List<BaseNewsItem> newsItems;
+  SubPageAssist subPageAssist;
 
   void _onRefresh() async {
     // monitor network fetch
@@ -23,13 +30,18 @@ class MainSubPageState extends State<MainSubPage> {
     // monitor network fetch
     await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use loadFailed(),if no data return,use LoadNodata()
-    items.add((items.length + 1).toString());
+    //items.add((items.length + 1).toString());
+    var  items = subPageAssist.getNewsItemsFromServer();
+    newsItems.addAll(items);
     if (mounted) setState(() {});
     _refreshController.loadComplete();
   }
 
   @override
-  void initState() {}
+  void initState() {
+    subPageAssist = SubPageAssist();
+    newsItems = subPageAssist.getNewsItemsFromServer();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +74,9 @@ class MainSubPageState extends State<MainSubPage> {
         onRefresh: _onRefresh,
         onLoading: _onLoading,
         child: ListView.builder(
-          itemBuilder: (c, i) => Card(child: Center(child: Text(items[i]))),
+          itemBuilder: (c, i) => Card(child: Center(child: ImageNewsView(newsItems[i]))),
           itemExtent: 100.0,
-          itemCount: items.length,
+          itemCount: newsItems.length,
         ),
       ),
     );
